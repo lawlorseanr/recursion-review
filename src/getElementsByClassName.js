@@ -3,6 +3,7 @@
 //   return document.getElementsByClassName(className);
 // };
 
+// Louis added
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className
 ) {
