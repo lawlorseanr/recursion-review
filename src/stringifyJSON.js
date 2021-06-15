@@ -30,7 +30,11 @@ var stringifyJSON = function(obj) {
 
   // array
   if (Array.isArray(obj)) {
-
+    stringOutput += '[';
+    for (var i = 0; i < obj.length; i++) {
+      stringOutput += obj[i] + ',';
+    }
+    stringOutput += ']';
   }
 
   // object
