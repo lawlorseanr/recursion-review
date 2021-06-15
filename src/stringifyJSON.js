@@ -9,7 +9,7 @@ var stringifyJSON = function(obj) {
 
   // primitives
   if (typeof obj === 'string') {
-    stringOutput += obj;
+    stringOutput += '"' + obj + '"';
   }
 
   if (typeof obj === 'number') {
@@ -24,21 +24,45 @@ var stringifyJSON = function(obj) {
     stringOutput += 'null';
   }
 
-  if (obj === undefined || typeof obj === 'function') {
-
-  }
-
   // array
   if (Array.isArray(obj)) {
+
     stringOutput += '[';
     for (var i = 0; i < obj.length; i++) {
-      stringOutput += obj[i] + ',';
+
+      var stringifyOutput = stringifyJSON(obj[i]);
+      stringOutput += stringifyOutput;
+
+      if (i !== obj.length - 1) {
+        stringOutput += ',';
+      }
+
     }
     stringOutput += ']';
+
   }
 
   // object
-  if (typeof obj === 'object') {
+  if (!Array.isArray(obj) && obj instanceof Object) {
+
+    stringOutput += '{';
+    for (var key in obj) {
+
+      if (obj[key] !== undefined && typeof obj[key] !== 'function') {
+        stringOutput += '"' + key + '"';
+        stringOutput += ':';
+
+        var stringifyOutput = stringifyJSON(obj[key]);
+        stringOutput += stringifyOutput;
+        stringOutput += ',';
+      }
+
+    }
+
+    if (stringOutput.length > 2) {
+      stringOutput = stringOutput.substr(0, stringOutput.length - 1);
+    }
+    stringOutput += '}';
 
   }
 
